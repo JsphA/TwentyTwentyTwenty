@@ -3,7 +3,7 @@
 # This app will remind you every 20 minutes to look at something 20 feet away for 20 seconds.
 
 # Config
-interval = 3#20 * 60                                    # The interval between reminders.
+interval = 20 * 60                                      # The interval between reminders.
 distance = "20 feet"                                    # The distance to look away.
 duration = 20                                           # The time to look away for.
 message = "Look at something {} away for {} seconds."   # The message to display.
@@ -11,8 +11,10 @@ title = "TwentyTwentyTwenty"                            # The window title.
 window_size = "400x100"                                 # The window size.
 message_font = "Segoe UI"                               # The font of the message.
 message_font_size = 12                                  # The font size of the message.
+show_start_message = True                               # Whether or not to show the start message.
 
 import tkinter
+from tkinter import messagebox
 import time
 import threading
 import os
@@ -76,6 +78,10 @@ def main():
     global label
     label = tkinter.Label(root, text=message.format(distance, duration), font=(message_font, message_font_size))
     label.place(relx = 0.5, rely = 0.5, anchor = "center")
+
+    if show_start_message:
+        with open("lang/en/start_message.txt") as start_message:
+            messagebox.showinfo(title, start_message.read())
 
     while True:
         time.sleep(interval)
